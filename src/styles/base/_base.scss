@@ -1,5 +1,6 @@
 * {
   box-sizing: border-box;
+  outline: none;
 }
 
 html {
@@ -7,6 +8,8 @@ html {
 }
 
 body {
+  background: #ecf0f1;
+  font-family: 'Montserrat', sans-serif;
   font-size: $m-size;
   line-height: 1.6;
 }
