@@ -12,7 +12,10 @@ class MainPage extends React.Component {
                     <div className="header__wrapper">
                         <h1 className="header">{this.state.login === true ? 'Login' : 'Create Account'}</h1>
                     </div>
-                    <p className="welcome">Welcome back! {this.state.login === true ? 'Login' : 'Create an account'} to access the app.</p>
+                    <p className="welcome">Welcome{this.state.login === true ?
+                        ' back' : ''}! {this.state.login === true ?
+                            'Login' :
+                            'Create an account'} to access the app.</p>
                     <form className="form">
                         {
                             (this.state.login === true) ? (
@@ -67,7 +70,9 @@ class MainPage extends React.Component {
                         }}
                     >
                         {
-                            this.state.login === true ? 'Create Account' : 'Login'
+                            this.state.login === true ?
+                                'Don\'t have an account? Create one!' :
+                                'Already have an account? Login!'
                         }
                     </button>
                 </div>

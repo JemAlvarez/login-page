@@ -1,6 +1,6 @@
 .login {
     display: grid;
-    min-height: 100vh;
+    height: 100vh;
     place-items: center;
     text-align: center;
 }
@@ -153,10 +153,11 @@
 .login-create {
     background: transparent;
     border: none;
-    color: #020024;
+    color: #0074D9;
     font-size: 1.5rem;
 
     &:hover {
-        color: red;
+        color: #F012BE;
+        text-decoration: underline;
     }
 }
