@@ -1,13 +1,19 @@
 // Colors
-// $background: #2c2f33;
-// $blue: #d24d57;
-// $dark-blue: #23272a;
-// $accent: #22a7f0;
+$background: #ecf0f1;
+$dark-blue: #020024;
+$blue: #0074D9;
+$accent: #F012BE;
 // $white: #ECF0F1;
+
+$blue-gradient: linear-gradient(90deg,rgba(2, 0, 36, 1) 0%,rgba(60, 60, 201, 1) 52%,rgba(0, 212, 255, 1) 100%);
+$purple-gradient: linear-gradient(127deg, rgba(195,34,191,1) 0%, rgba(45,98,253,1) 100%);
 
 // Font Size
 $font-size-large: 1.8rem;
 $font-size-small: 1.4rem;
+
+// Misc
+$trans: all ease 0.3s; 
 
 // Spacing
 $xs-size: 0.8rem;

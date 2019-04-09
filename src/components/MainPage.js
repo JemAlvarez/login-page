@@ -1,9 +1,78 @@
 import React from 'react'
+import { history } from '../routers/AppRouter'
 import { IoIosArrowDropright } from "react-icons/io";
 
 class MainPage extends React.Component {
     state = {
         login: true
+    }
+    postData(e) {
+        const url = 'https://ja-task-manager-api.herokuapp.com'
+        e.preventDefault()
+        if (this.state.login) {
+            const email = document.querySelector('#emailL')
+            const pw = document.querySelector('#passwordL')
+
+            const data = {
+                email: email.value,
+                password: pw.value
+            }
+
+            fetch(`${url}/users/login`, {
+                method: 'POST',
+                body: JSON.stringify(data),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(res => res.json())
+                .then(response => {
+                    console.log('Logedin')
+                    console.log(response)
+                    localStorage.setItem('jwt', response.token)
+                    history.push('/account')
+                })
+                .catch(error => console.error('Error:', error));
+
+            email.value = ''
+            pw.value = ''
+        } else {
+            const email = document.querySelector('#emailC')
+            const pw = document.querySelector('#passwordC')
+            const rePw = document.querySelector('#re-passwordC')
+            const age = document.querySelector('#ageC')
+            const name = document.querySelector('#nameC')
+
+            if (pw.value !== rePw.value) {
+                return console.log('Passwords dont match.')
+            }
+
+            const data = {
+                name: name.value,
+                email: email.value,
+                age: age.value,
+                password: pw.value
+            }
+
+            fetch(`${url}/users`, {
+                method: 'POST',
+                body: JSON.stringify(data),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(res => res.json())
+                .then(response => {
+                    console.log('Account Created/Logedin')
+                    console.log(response)
+                    localStorage.setItem('jwt', response.token)
+                    history.push('/account')
+                })
+                .catch(error => console.error('Error:', error));
+
+            name.value = ''
+            email.value = ''
+            age.value = ''
+            pw.value = ''
+        }
     }
     render() {
         return (
@@ -16,49 +85,53 @@ class MainPage extends React.Component {
                         ' back' : ''}! {this.state.login === true ?
                             'Login' :
                             'Create an account'} to access the app.</p>
-                    <form className="form">
+                    <form
+                        className="form"
+                        onSubmit={(e) => { this.postData(e) }}
+                    >
                         {
                             (this.state.login === true) ? (
                                 <div className="form__login">
                                     <div className="form__group">
-                                        <input type="text" name="email" required></input>
+                                        <input id="emailL" type="text" name="email" required></input>
                                         <label htmlFor="email">Email <span>*</span></label>
                                     </div>
                                     <div className="form__group">
-                                        <input type="password" name="password" required></input>
+                                        <input id="passwordL" type="password" name="password" required></input>
                                         <label htmlFor="password">Password <span>*</span></label>
                                     </div>
                                 </div>
                             ) : (
                                     <div className="form__create">
                                         <div className="form__group">
-                                            <input type="text" name="name" required></input>
+                                            <input id="nameC" type="text" name="name" required></input>
                                             <label htmlFor="name">Name <span>*</span></label>
                                         </div>
                                         <div className="form__group">
-                                            <input type="text" name="email" required></input>
+                                            <input id="emailC" type="text" name="email" required></input>
                                             <label htmlFor="email">Email <span>*</span></label>
                                         </div>
                                         <div className="form__group">
-                                            <input type="number" name="age" required></input>
+                                            <input id="ageC" type="number" name="age" required></input>
                                             <label htmlFor="age">Age</label>
                                         </div>
                                         <div className="form__group">
-                                            <input type="password" name="password" required></input>
+                                            <input id="passwordC" type="password" name="password" required></input>
                                             <label htmlFor="password">Password <span>*</span></label>
+                                        </div>
+                                        <div className="form__group">
+                                            <input id="re-passwordC" type="password" name="re-password" required></input>
+                                            <label htmlFor="re-password">Password Again <span>*</span></label>
                                         </div>
                                     </div>
                                 )
                         }
                         <div className="form__submit">
                             <IoIosArrowDropright />
-                            <button
-                                onClick={(e) => {
-                                    e.preventDefault()
-                                }}
-                            >
-                                Continue
-                        </button>
+                            <input
+                                type="submit"
+                                value="Continue"
+                            ></input>
                         </div>
                     </form>
                     <button

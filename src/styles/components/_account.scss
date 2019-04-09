@@ -1,0 +1,64 @@
+.account {
+
+}
+
+.account__container {
+    display: grid;
+    height: 100vh;
+    place-items: center;
+}
+
+.account__logout {
+
+}
+
+.user__card {
+    background: darken($background, 5%);
+    border-radius: 2rem;
+    display: grid;
+    padding: $l-size;
+    text-align: left;
+}
+
+.user__subheading {
+    color: rgba($dark-blue, 0.8);
+    font-size: 1.4rem;
+    margin: 0;
+    padding: 0;
+}
+
+.user__img {
+    border-radius: 99%;
+    justify-self: center;
+    height: 180px;
+    width: 180px;
+}
+
+.user__name {
+    color: $dark-blue;
+    text-align: center;
+}
+
+.user__text {
+    border-bottom: 1px solid lightgrey;
+    color: rgba($blue, 0.6);
+    font-size: 1.8rem;
+    margin: 0 0 $m-size 0;
+    padding: 0;
+}
+
+.user__edit {
+    background: $purple-gradient;
+    border: none;
+    border-radius: $s-size;
+    color: white;
+    display: inline-block;
+    justify-self: right;
+    padding: $xs-size $m-size;
+    text-transform: uppercase;
+    transition: $trans;
+
+    &:hover {
+        padding: $xs-size $l-size;
+    }
+}
