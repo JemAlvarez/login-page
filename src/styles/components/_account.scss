@@ -51,14 +51,15 @@
 
     &:hover {
         .img__overlay {
-            opacity: 0.6;
+            opacity: 1;
         }
     }
 }
 
 .img__overlay {
-    background: black;
+    background: rgba(black, 0.6);
     border-radius: 99%;
+    display: grid;
     height: 100%;
     left: 0;
     position: absolute;
@@ -66,6 +67,15 @@
     top: 0;
     transition: $trans;
     width: 100%;
+
+    svg {
+        color: white;
+        font-size: 5rem;
+        left: 50%;
+        position: absolute;
+        top: 50%;
+        transform: translate(-50%, -50%);
+    }
 }
 
 .user__img {

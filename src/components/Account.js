@@ -2,6 +2,7 @@ import React from 'react'
 import { history } from '../routers/AppRouter'
 import Modal from 'react-modal'
 import { IoMdClose } from 'react-icons/io'
+import { FaImage } from 'react-icons/fa'
 
 class Account extends React.Component {
     state = {
@@ -103,7 +104,7 @@ class Account extends React.Component {
                                 className="user__img"
                                 src={this.state.img}
                             ></img>
-                            <div className="img__overlay"></div>
+                            <div className="img__overlay"><FaImage /></div>
                         </div>
                         <h1 className="user__name">{this.state.name || '...'}</h1>
                         {

@@ -142,13 +142,19 @@ class MainPage extends React.Component {
                                     </div>
                                 )
                         }
-                        <div className="form__submit">
+                        {/*<div>
                             <IoIosArrowDropright />
                             <input
                                 type="submit"
                                 value="Continue"
                             ></input>
-                        </div>
+                        </div>*/}
+                        <button
+                            className="form__submit"
+                            type="submit"
+                        >
+                            <IoIosArrowDropright /> Continue
+                        </button>
                     </form>
                     <button
                         className="login-create"
