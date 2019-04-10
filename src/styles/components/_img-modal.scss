@@ -1,0 +1,70 @@
+.ReactModalPortal>div {
+    opacity: 0;
+}
+
+.ReactModalPortal .ReactModal__Overlay {
+    align-items: center;
+    background-color: rgba(black, 0.75) !important;
+    display: flex;
+    justify-content: center;
+    transition: opacity 200ms ease-in-out;
+    z-index: 99
+}
+
+.ReactModalPortal .ReactModal__Overlay--after-open {
+    opacity: 1;
+}
+
+.ReactModalPortal .ReactModal__Overlay--before-close {
+    opacity: 0;
+}
+
+.modal {
+    background: darken($background, 5%);
+    border-radius: 2rem;
+    outline: none;
+    padding: $m-size;
+    position: relative;
+    width: 290px;
+
+    p {
+        text-align: center;
+        margin: 0;
+        margin-bottom: $m-size;
+    }
+
+    @media (min-width: $desktop-breakpoint) {
+        transform: scale(1);
+        width: 350px;
+    }
+}
+
+.modal__close {
+    float: right;
+}
+
+.img-form {
+    p{
+        color: $accent;
+        font-size: 1.4rem;
+        margin: 0;
+        margin-top: $s-size;
+    }
+
+    button {
+        display: block;
+    }
+
+    input[type="file"] {
+        opacity: 0;
+        position: absolute;
+        left: 0;
+        top: 0;
+        pointer-events: none;
+    }
+
+    input[type="submit"] {
+        cursor: pointer;
+        margin-top: $m-size;
+    }
+}
