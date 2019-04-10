@@ -41,22 +41,31 @@
     padding: 0;
 }
 
-
-
-.user__img-edit {
-    background: rgba(black, 0.6);
-    border-radius: 99%;
-    color: white;
+.img__container {
+    display: grid;
+    cursor: pointer;
+    justify-self: center;
     height: 180px;
-    left: 0;
-    line-height: 200px;
-    margin-left: auto;
-    margin-right: auto;
-    position: absolute;
-    text-align: center;
-    pointer-events: none;
-    right: 0;
+    position: relative;
     width: 180px;
+
+    &:hover {
+        .img__overlay {
+            opacity: 0.6;
+        }
+    }
+}
+
+.img__overlay {
+    background: black;
+    border-radius: 99%;
+    height: 100%;
+    left: 0;
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    transition: $trans;
+    width: 100%;
 }
 
 .user__img {
@@ -64,12 +73,9 @@
     cursor: pointer;
     justify-self: center;
     height: 180px;
+    position: relative;
     transition: $trans;
     width: 180px;
-
-    &:hover {
-        opacity: 0.6;
-    }
 }
 
 .user__name {
@@ -101,8 +107,4 @@
     &:hover {
         padding: $xs-size $l-size;
     }
-}
-
-.account__logout {
-    background: $blue-gradient;
 }

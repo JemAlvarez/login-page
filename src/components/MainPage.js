@@ -155,7 +155,7 @@ class MainPage extends React.Component {
                         onClick={(e) => {
                             e.preventDefault()
                             this.setState((state) => ({ login: !state.login, error: '' }))
-                            document.querySelector('form').reset()
+                            document.querySelector('.form').reset()
                         }}
                     >
                         {
