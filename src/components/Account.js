@@ -12,6 +12,10 @@ class Account extends React.Component {
         edit: 'edit'
     }
     componentWillMount() {
+        if (!localStorage.jwt) {
+            localStorage.setItem('jwt', '')
+            history.push('/')
+        }
         fetch(`${this.state.url}/users/me`, {
             method: 'GET',
             headers: {
@@ -56,6 +60,7 @@ class Account extends React.Component {
         }))
     }
     editInfo() {
+        console.log('edit info')
         // if edit state is edit -> change to save
         // if edit state is save -> change to edit & send request to update data (if data changed)
     }
@@ -63,14 +68,20 @@ class Account extends React.Component {
         return (
             <div className="account container">
                 <button
-                    className="account__logout"
+                    className="account__logout btn"
                     onClick={() => { this.logout() }}
                 >
                     Logout
                 </button>
                 <div className="account__container">
                     <div className="user__card">
-                        <img className="user__img" src={this.state.img}></img>
+                        <img
+                            className="user__img"
+                            src={this.state.img}
+                            onClick={() => {
+                                console.log('edit img')
+                            }}
+                        ></img>
                         <h1 className="user__name">{this.state.name || '...'}</h1>
                         {
                             this.state.edit === 'edit' ? (
@@ -90,7 +101,7 @@ class Account extends React.Component {
                                 )
                         }
                         <button
-                            className="user__edit"
+                            className="user__edit btn"
                             onClick={() => { this.editInfo() }}
                         >
                             {this.state.edit}

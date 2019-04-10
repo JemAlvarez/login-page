@@ -1,5 +1,5 @@
 .account {
-
+    position: relative;
 }
 
 .account__container {
@@ -9,7 +9,10 @@
 }
 
 .account__logout {
-
+    position: absolute;
+    top: 2%;
+    right: 2%;
+    z-index: 99;
 }
 
 .user__card {
@@ -18,20 +21,55 @@
     display: grid;
     padding: $l-size;
     text-align: left;
+    transform: scale(0.9);
+    width: 290px;
+    -webkit-box-shadow: 0px 10px 30px 0px rgba(0,0,0,0.5);
+    -moz-box-shadow: 0px 10px 30px 0px rgba(0,0,0,0.5);
+    box-shadow: 0px 10px 30px 0px rgba(0,0,0,0.5);
+
+    @media (min-width: $desktop-breakpoint) {
+        transform: scale(1);
+        width: 350px;
+    }
 }
 
 .user__subheading {
     color: rgba($dark-blue, 0.8);
     font-size: 1.4rem;
+    font-weight: 700;
     margin: 0;
     padding: 0;
 }
 
+
+
+.user__img-edit {
+    background: rgba(black, 0.6);
+    border-radius: 99%;
+    color: white;
+    height: 180px;
+    left: 0;
+    line-height: 200px;
+    margin-left: auto;
+    margin-right: auto;
+    position: absolute;
+    text-align: center;
+    pointer-events: none;
+    right: 0;
+    width: 180px;
+}
+
 .user__img {
     border-radius: 99%;
+    cursor: pointer;
     justify-self: center;
     height: 180px;
+    transition: $trans;
     width: 180px;
+
+    &:hover {
+        opacity: 0.6;
+    }
 }
 
 .user__name {
@@ -45,14 +83,16 @@
     font-size: 1.8rem;
     margin: 0 0 $m-size 0;
     padding: 0;
+    word-break: break-all;
 }
 
-.user__edit {
+.btn {
     background: $purple-gradient;
     border: none;
     border-radius: $s-size;
     color: white;
     display: inline-block;
+    font-weight: 700;
     justify-self: right;
     padding: $xs-size $m-size;
     text-transform: uppercase;
@@ -61,4 +101,8 @@
     &:hover {
         padding: $xs-size $l-size;
     }
+}
+
+.account__logout {
+    background: $blue-gradient;
 }

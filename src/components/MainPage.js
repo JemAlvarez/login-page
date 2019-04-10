@@ -4,7 +4,9 @@ import { IoIosArrowDropright } from "react-icons/io";
 
 class MainPage extends React.Component {
     state = {
-        login: true
+        login: true,
+        error: '',
+        error2: ''
     }
     postData(e) {
         const url = 'https://ja-task-manager-api.herokuapp.com'
@@ -24,17 +26,18 @@ class MainPage extends React.Component {
                 headers: {
                     'Content-Type': 'application/json'
                 }
-            }).then(res => res.json())
-                .then(response => {
-                    console.log('Logedin')
-                    console.log(response)
-                    localStorage.setItem('jwt', response.token)
-                    history.push('/account')
-                })
-                .catch(error => console.error('Error:', error));
-
-            email.value = ''
-            pw.value = ''
+            }).then(res => {
+                if (res.status === 400) {
+                    this.setState(() => ({ error: 'Your email or password is incorrect.' }))
+                } else {
+                    return res.json()
+                }
+            }).then(response => {
+                localStorage.setItem('jwt', response.token)
+                history.push('/account')
+                email.value = ''
+                pw.value = ''
+            })
         } else {
             const email = document.querySelector('#emailC')
             const pw = document.querySelector('#passwordC')
@@ -49,7 +52,7 @@ class MainPage extends React.Component {
             const data = {
                 name: name.value,
                 email: email.value,
-                age: age.value,
+                age: age.value = 0,
                 password: pw.value
             }
 
@@ -61,17 +64,28 @@ class MainPage extends React.Component {
                 }
             }).then(res => res.json())
                 .then(response => {
-                    console.log('Account Created/Logedin')
-                    console.log(response)
-                    localStorage.setItem('jwt', response.token)
-                    history.push('/account')
-                })
-                .catch(error => console.error('Error:', error));
+                    if (response.errors) {
+                        if (response.errors.email) {
+                            this.setState(() => ({ error: 'Email is invalid' }))
+                        } else {
+                            this.setState(() => ({ error: '' }))
+                        }
 
-            name.value = ''
-            email.value = ''
-            age.value = ''
-            pw.value = ''
+                        if (response.errors.password) {
+                            this.setState(() => ({ error2: 'Password is too short' }))
+                        } else {
+                            this.setState(() => ({ error2: '' }))
+                        }
+                    } else {
+                        localStorage.setItem('jwt', response.token)
+                        history.push('/account')
+
+                        name.value = ''
+                        email.value = ''
+                        age.value = ''
+                        pw.value = ''
+                    }
+                })
         }
     }
     render() {
@@ -85,6 +99,8 @@ class MainPage extends React.Component {
                         ' back' : ''}! {this.state.login === true ?
                             'Login' :
                             'Create an account'} to access the app.</p>
+                    <p className="login__error">{this.state.error}</p>
+                    <p className="login__error">{this.state.error2}</p>
                     <form
                         className="form"
                         onSubmit={(e) => { this.postData(e) }}
@@ -138,7 +154,7 @@ class MainPage extends React.Component {
                         className="login-create"
                         onClick={(e) => {
                             e.preventDefault()
-                            this.setState((state) => ({ login: !state.login }))
+                            this.setState((state) => ({ login: !state.login, error: '' }))
                             document.querySelector('form').reset()
                         }}
                     >
