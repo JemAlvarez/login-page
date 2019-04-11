@@ -1,8 +1,8 @@
 import React from 'react'
 import { history } from '../routers/AppRouter'
 import Modal from 'react-modal'
-import { IoMdClose } from 'react-icons/io'
-import { FaImage } from 'react-icons/fa'
+import { IoMdClose, IoIosLogOut } from 'react-icons/io'
+import { FaImage, FaUser } from 'react-icons/fa'
 
 class Account extends React.Component {
     state = {
@@ -15,9 +15,9 @@ class Account extends React.Component {
         edit: 'edit',
         modalOpen: false,
         imgError: '',
+        noFileError: '',
         file: '',
-        loading: '',
-        imgKey: 1
+        loading: ''
     }
     componentWillMount() {
         if (!localStorage.jwt) {
@@ -64,7 +64,7 @@ class Account extends React.Component {
             email: '',
             age: '',
             id: '',
-            img: ''
+            img: 'https://heartland.cc/wp-content/uploads/2018/02/male-placeholder.jpg'
         }))
     }
     editInfo() {
@@ -87,7 +87,7 @@ class Account extends React.Component {
                     className="account__logout btn"
                     onClick={() => { this.logout() }}
                 >
-                    Logout
+                    <IoIosLogOut /> Logout
                 </button>
                 <div className="account__container">
                     <div className="user__card">
@@ -100,7 +100,6 @@ class Account extends React.Component {
                             }}
                         >
                             <img
-                                key={this.state.imgKey}
                                 className="user__img"
                                 src={this.state.img}
                             ></img>
@@ -128,7 +127,7 @@ class Account extends React.Component {
                             className="user__edit btn"
                             onClick={() => { this.editInfo() }}
                         >
-                            {this.state.edit}
+                            <FaUser /> {this.state.edit}
                         </button>
                     </div>
                 </div>
@@ -157,20 +156,23 @@ class Account extends React.Component {
                                         }
                                     })
                                         .then(response => {
-                                            this.setState(() => ({ loading: '' }))
+                                            this.setState(() => ({ loading: ''}))
                                             if (response.status === 400) {
                                                 this.setState(() => ({ imgError: 'Upload an image under 1 MB' }))
                                                 return
                                             }
+                                            this.setState(() => ({ file: ''}))
                                             window.location.reload()
                                             this.onRequestClose()
                                         })
                                 }}
                             >
                                 <p>{this.state.imgError}</p>
+                                <p>{this.state.noFileError}</p>
                                 <input type="file" name="avatar" id="avatar" onChange={() => {
                                     this.setState(() => ({
-                                        file: avatar.files[0]
+                                        file: avatar.files[0],
+                                        noFileError: '' 
                                     }))
                                 }}></input>
                                 <button
@@ -190,6 +192,10 @@ class Account extends React.Component {
                                     value={`Update ${this.state.loading}`}
                                     name="submit"
                                     onClick={(e) => {
+                                        if (this.state.file === '') {
+                                            this.setState(() => ({ loading: '', noFileError: 'No file selected' }))
+                                            return
+                                        }
                                         this.setState(() => ({ loading: '...' }))
                                     }}
                                 ></input>

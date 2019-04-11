@@ -6,7 +6,9 @@ class MainPage extends React.Component {
     state = {
         login: true,
         error: '',
-        error2: ''
+        error2: '',
+        error3: '',
+        error4: ''
     }
     postData(e) {
         const url = 'https://ja-task-manager-api.herokuapp.com'
@@ -46,13 +48,16 @@ class MainPage extends React.Component {
             const name = document.querySelector('#nameC')
 
             if (pw.value !== rePw.value) {
-                return console.log('Passwords dont match.')
+                this.setState(() => ({error3: 'Passwords don\'t match.'}))
+                return 
+            } else {
+                this.setState(() => ({error3: ''}))
             }
 
             const data = {
                 name: name.value,
                 email: email.value,
-                age: age.value = 0,
+                age: age.value,
                 password: pw.value
             }
 
@@ -64,19 +69,7 @@ class MainPage extends React.Component {
                 }
             }).then(res => res.json())
                 .then(response => {
-                    if (response.errors) {
-                        if (response.errors.email) {
-                            this.setState(() => ({ error: 'Email is invalid' }))
-                        } else {
-                            this.setState(() => ({ error: '' }))
-                        }
-
-                        if (response.errors.password) {
-                            this.setState(() => ({ error2: 'Password is too short' }))
-                        } else {
-                            this.setState(() => ({ error2: '' }))
-                        }
-                    } else {
+                    if (response.user) {
                         localStorage.setItem('jwt', response.token)
                         history.push('/account')
 
@@ -84,6 +77,25 @@ class MainPage extends React.Component {
                         email.value = ''
                         age.value = ''
                         pw.value = ''
+                        return
+                    }
+
+                    if (response.errmsg) {
+                        this.setState(() => ({error4: 'Email already in used.'}))
+                    } else {
+                        this.setState(() => ({error4: ''}))
+                    }
+
+                    if (response.errors.email) {
+                        this.setState(() => ({ error: 'Email is invalid' }))
+                    } else {
+                        this.setState(() => ({ error: '' }))
+                    }
+
+                    if (response.errors.password) {
+                        this.setState(() => ({ error2: 'Password is too short (More than 7 characters)' }))
+                    } else {
+                        this.setState(() => ({ error2: '' }))
                     }
                 })
         }
@@ -95,12 +107,16 @@ class MainPage extends React.Component {
                     <div className="header__wrapper">
                         <h1 className="header">{this.state.login === true ? 'Login' : 'Create Account'}</h1>
                     </div>
-                    <p className="welcome">Welcome{this.state.login === true ?
-                        ' back' : ''}! {this.state.login === true ?
-                            'Login' :
-                            'Create an account'} to access the app.</p>
+                    <p className="welcome">
+                        Welcome
+                        {this.state.login === true ? ' back' : '' }! 
+                        {this.state.login === true ? 'Login' : 'Create an account'} 
+                        to access the app.
+                    </p>
                     <p className="login__error">{this.state.error}</p>
                     <p className="login__error">{this.state.error2}</p>
+                    <p className="login__error">{this.state.error3}</p>
+                    <p className="login__error">{this.state.error4}</p>
                     <form
                         className="form"
                         onSubmit={(e) => { this.postData(e) }}
@@ -142,13 +158,6 @@ class MainPage extends React.Component {
                                     </div>
                                 )
                         }
-                        {/*<div>
-                            <IoIosArrowDropright />
-                            <input
-                                type="submit"
-                                value="Continue"
-                            ></input>
-                        </div>*/}
                         <button
                             className="form__submit"
                             type="submit"
