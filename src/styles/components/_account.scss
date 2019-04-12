@@ -118,3 +118,16 @@
         padding: $xs-size $l-size;
     }
 }
+
+.user__btns {
+    display: flex;
+    justify-content: space-between;
+}
+
+.user__delete {
+    background: linear-gradient(127deg, rgba(195,34,34,1) 0%, rgba(240,80,123,1) 100%);
+}
+
+.user__check {
+    background: linear-gradient(127deg, rgba(45,153,12,1) 0%, rgba(160,166,36,1) 100%);
+}
