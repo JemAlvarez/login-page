@@ -79,7 +79,7 @@ class Account extends React.Component {
         if (this.state.imgOpen === true) {
             document.querySelector('.img-form').reset()
         }
-        this.setState(() => ({ imgOpen: false, editOpen: false, file: '', imgError: '' }))
+        this.setState(() => ({ imgOpen: false, editOpen: false, deleteOpen: false, file: '', imgError: '' }))
         document.querySelector('#app').setAttribute("style", "position: static")
     }
     onAfterOpen() {
@@ -333,6 +333,7 @@ class Account extends React.Component {
                             <button
                                 className="modal__close btn user__delete"
                                 onClick={() => {
+                                    console.log('hey')
                                     this.onRequestClose()
                                 }}
                             >
